@@ -32,7 +32,18 @@ export default {
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-sm-3 g-4">
                 <div class="col" v-for="project in projects">
-                    <div class="card">
+                    <div class="card h-100">
+
+                        <template v-if="project.screenshot_site">
+                            <img :src="project.screenshot_site.startsWith('upload') ? base_api_url + '/storage/' + project.screenshot_site : project.screenshot_site"
+                                :alt="'image of project' + project.title">
+                        </template>
+
+                        <template v-else>
+                            <img src="/src/assets/img/image_not_available.png" alt="image not available">
+                        </template>
+
+
                         <div class="card-body">
                             {{ project.title }}
                         </div>
