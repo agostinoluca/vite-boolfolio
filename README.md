@@ -23,3 +23,8 @@ Creiamo un nuovo componente ProjectCard, che corrisponde ad una card per visuali
 1. gestire la paginazione dei risultati;
 2. creare una modale per visualizzare i dettagli del singolo post;
 3. implementare il filtro search.
+
+### Errore riconosciuto lato front, da risolvere:
+
+Errore con le paginazioni dei risultati dopo la ricerca.
+Il filtro fornisce il numero di pagine contenenti i risultati, ma quando clicchiamo sulla pagine o su next/previous resettiamo la chiamata axios allo stato iniziale (tornano tutte le pagine originarie e si annulla il filtro).
