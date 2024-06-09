@@ -14,15 +14,19 @@ export default {
     methods: {
         search() {
             const projects_url = this.base_api_url + this.projects_endpoint + `?search=${this.search_project}`
-            console.log(projects_url);
+            // console.log(projects_url);
             this.callApi(projects_url)
+        },
+
+        changePage(url) {
+            this.callApi(url);
         },
 
         callApi(projects_url) {
             axios
                 .get(projects_url)
                 .then(resp => {
-                    console.log(resp);
+                    // console.log(resp);
                     this.projects = resp.data.results
                 })
                 .catch(err => {
@@ -33,7 +37,7 @@ export default {
     },
     mounted() {
         const projects_url = this.base_api_url + this.projects_endpoint
-        console.log(projects_url);
+        // console.log(projects_url);
         this.callApi(projects_url)
     }
 }
@@ -42,7 +46,7 @@ export default {
 <template>
 
     <div class="p-2 mb-4 bg-secondary">
-        <div class="container-fluid py-5 text-light">
+        <div class="container-fluid p-5 text-light">
             <h1 class="display-5 fw-bold">Browse My Web Development Projects!</h1>
             <p class="col-md-8 fs-4 p-2">
                 I'm Luca, a passionate and creative web developer. Explore my projects to see how i transform
@@ -69,7 +73,7 @@ export default {
     <section class="projects" v-if="projects">
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-sm-3 g-4">
-                <div class="col" v-for="project in projects">
+                <div class="col" v-for="project in projects.data">
                     <div class="card h-100">
 
                         <template v-if="project.screenshot_site">
@@ -88,6 +92,19 @@ export default {
                     </div>
                 </div>
             </div>
+
+
+            <nav aria-label="Page navigation" class="mt-4">
+                <ul class="pagination">
+                    <li class="page-item" :class="{ 'disabled': !link.url, 'active': link.active }"
+                        v-for="link in projects.links">
+                        <button class="page-link" :href="link.url" @click="changePage(link.url)">
+                            <span v-html="link.label"></span>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+
         </div>
 
 
